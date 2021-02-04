@@ -31,7 +31,7 @@ public class QueryHandler {
     }
 
     public Mono<ServerResponse> query(ServerRequest request) {
-        return ServerResponse.ok().contentType(MediaType.TEXT_EVENT_STREAM)
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(neo4jService.streamNodesFromNeo4j(), Node.class);
     }
 

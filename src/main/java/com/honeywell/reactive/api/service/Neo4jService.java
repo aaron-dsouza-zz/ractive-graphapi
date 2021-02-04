@@ -22,6 +22,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.honeywell.reactive.api.model.Node;
+
 @Service
 public class Neo4jService {
 
@@ -32,14 +34,16 @@ public class Neo4jService {
                 AuthTokens.basic("neo4j", "password"));
     }
 
-    public Flux<String> streamNodesFromNeo4j() {
+    public Flux<Node> streamNodesFromNeo4j() {
         String query = "MATCH (n) RETURN n";
         System.out.println("Querying for classes");
         return reactor.core.publisher.Flux.usingWhen( Mono.just( driver.rxSession(SessionConfig.forDatabase("hcb")) ),
                 session -> session.readTransaction( tx -> {
                             RxResult result = tx.run( query );
                             return reactor.core.publisher.Flux.from( result.records() )
-                                    .map( record -> record.get( 0 ).get("som.label:en", "No Label") );
+                                    .map( record -> 
+                                    new Node(Long.toString(record.get( 0 ).asNode().id()),
+                                    record.get( 0 ).get("som.label:en", "No Label")) );
                         }
                 ), RxSession::close );
     }
@@ -55,9 +59,5 @@ public class Neo4jService {
                         .map( record -> record.get(0).toString() );
             }
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }

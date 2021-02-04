@@ -6,12 +6,15 @@
  */
 package com.honeywell.reactive.api.controller;
 
+import com.honeywell.reactive.api.model.Node;
 import com.honeywell.reactive.api.service.Neo4jService;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/nodes")
@@ -23,7 +26,13 @@ public class QueryController {
     }
 
     @GetMapping
-    public Flux<String> query() {
+    public Flux<Node> query() {
         return neo4jService.streamNodesFromNeo4j();
+    }
+
+    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Flux<Node> streamNodes() {
+        return neo4jService.streamNodesFromNeo4j().filter(node-> Long.parseLong(node.getId()) > 100 && Long.parseLong(node.getId()) < 140);
     }
 }
