@@ -10,6 +10,7 @@ import com.honeywell.reactive.api.model.Node;
 import com.honeywell.reactive.api.service.Neo4jService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
@@ -29,7 +30,7 @@ public class QueryHandler {
         this.neo4jService = neo4jService;
     }
 
-    public Mono<ServerResponse> hello(ServerRequest request) {
+    public Mono<ServerResponse> query(ServerRequest request) {
         return ServerResponse.ok().contentType(MediaType.TEXT_EVENT_STREAM)
                 .body(neo4jService.streamNodesFromNeo4j(), Node.class);
     }
@@ -39,6 +40,11 @@ public class QueryHandler {
         Flux<Node> nodes = Flux.fromStream(Stream.generate(()->new Node(UUID.randomUUID().toString(),
                 generateRandomString())));
         return Flux.zip(nodes, interval, (key, value) -> key);
+    }
+
+    public Mono<ServerResponse> hello(ServerRequest request) {
+        return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
+                .body(BodyInserters.fromValue("Hello, Spring!"));
     }
 
     private String generateRandomString() {

@@ -25,7 +25,8 @@ public class WebConfig implements WebFluxConfigurer {
     @Bean
     public RouterFunction<ServerResponse> routerFunction(QueryHandler queryHandler) {
         return route()
-                .GET("/query", RequestPredicates.accept(MediaType.APPLICATION_JSON), queryHandler::hello)
+                .GET("/query", RequestPredicates.accept(MediaType.APPLICATION_JSON), queryHandler::query)
+                .GET("/hello", RequestPredicates.accept(MediaType.APPLICATION_JSON), queryHandler::hello)
                 .build();
     }
 }
