@@ -1,13 +1,14 @@
 /*
- * Copyright (c) 2020 Honeywell International, Inc. All rights reserved.
- * This file contains trade secrets of Honeywell International, Inc.  No part
- * may be reproduced or transmitted in any form by any means or for any
- * purpose without the express written permission of Honeywell.
+ * Copyright (c) 2021. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
-package com.honeywell.reactive.api.controller;
+package com.graph.reactive.api.controller;
 
-import com.honeywell.reactive.api.model.Node;
-import com.honeywell.reactive.api.service.Neo4jService;
+import com.graph.reactive.api.model.Node;
+import com.graph.reactive.api.service.Neo4jService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

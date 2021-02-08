@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2020 Honeywell International, Inc. All rights reserved.
- * This file contains trade secrets of Honeywell International, Inc.  No part
- * may be reproduced or transmitted in any form by any means or for any
- * purpose without the express written permission of Honeywell.
+ * Copyright (c) 2021. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
-package com.honeywell.reactive.api.service;
+package com.graph.reactive.api.service;
 
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;
@@ -22,7 +23,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.honeywell.reactive.api.model.Node;
+import com.graph.reactive.api.model.Node;
 
 @Service
 public class Neo4jService {
@@ -41,7 +42,7 @@ public class Neo4jService {
                 session -> session.readTransaction( tx -> {
                             RxResult result = tx.run( query );
                             return reactor.core.publisher.Flux.from( result.records() )
-                                    .map( record -> 
+                                    .map( record ->
                                     new Node(Long.toString(record.get( 0 ).asNode().id()),
                                     record.get( 0 ).get("som.label:en", "No Label")) );
                         }
