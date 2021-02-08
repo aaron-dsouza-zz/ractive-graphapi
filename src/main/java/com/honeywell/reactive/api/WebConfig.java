@@ -7,6 +7,7 @@
 package com.honeywell.reactive.api;
 
 import com.honeywell.reactive.api.handler.QueryHandler;
+import org.springframework.boot.autoconfigure.web.reactive.WebFluxProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -28,5 +29,10 @@ public class WebConfig implements WebFluxConfigurer {
                 .GET("/query", RequestPredicates.accept(MediaType.APPLICATION_JSON), queryHandler::query)
                 .GET("/hello", RequestPredicates.accept(MediaType.APPLICATION_JSON), queryHandler::hello)
                 .build();
+    }
+
+    @Bean
+    WebFluxProperties webFluxProperties(){
+        return new WebFluxProperties();
     }
 }
